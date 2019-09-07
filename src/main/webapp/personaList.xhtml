@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-</h:head>
+
 <h:body>
     <h1>Lista de personas</h1>
     <p:dataTable var="persona" value="#{personaBean.personas}">
@@ -24,7 +24,12 @@
             <h:outputText value="#{persona.apellido}" />
         </p:column>
 
+        <p:column headerText="Acciones">
 
+        <p:commandButton value="Eliminar" id="eliminar"  action="#{personaBean.delete}"  >
+            <f:param name="PersonaId" value="#{persona.id}" />
+        </p:commandButton>
+        </p:column>
     </p:dataTable>
     <p:linkButton outcome="personaCreate" value="Crear personas" style="margin-right:20px;"/>
 
