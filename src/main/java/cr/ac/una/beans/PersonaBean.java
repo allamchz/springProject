@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.util.List;
+import java.util.Optional;
 
 
 @Component
@@ -46,5 +48,18 @@ public class PersonaBean {
     public void create() {
         personaService.createPersona(persona);
         personas = personaService.getAllPersonas();
+    }
+
+    public void delete(){
+        Long idPersona = new Long(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("PersonaId"));
+        personaService.deletePersona(idPersona);
+        personas = personaService.getAllPersonas();
+    }
+    public String carga(){
+        Long idPersona = new Long(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("PersonaId"));
+        Optional <Persona> personaOptional = personaService.findPersonaById(idPersona);
+        if (personaOptional.isPresent())
+            persona = personaOptional.get();
+        return "personaUpdate";
     }
 }
