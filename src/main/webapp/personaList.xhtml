@@ -12,33 +12,39 @@
 <h:body>
     <h1>Lista de personas</h1>
     <h:form>
-    <p:dataTable var="persona" value="#{personaBean.personas}" id="tablaPersona">
-        <p:column headerText="Id">
-            <h:outputText value="#{persona.id}" />
-        </p:column>
+        <p:dataTable var="persona" value="#{personaBean.personas}" id="tablaPersona">
+            <p:column headerText="Id">
+                <h:outputText value="#{persona.id}"/>
+            </p:column>
 
-        <p:column headerText="Nombre">
-            <h:outputText value="#{persona.nombre}" />
-        </p:column>
+            <p:column headerText="Nombre">
+                <h:outputText value="#{persona.nombre}"/>
+            </p:column>
 
-        <p:column headerText="Apellido">
-            <h:outputText value="#{persona.apellido}" />
-        </p:column>
+            <p:column headerText="Apellido">
+                <h:outputText value="#{persona.apellido}"/>
+            </p:column>
 
-        <p:column headerText="Acciones">
-
-
+            <p:column headerText="Acciones">
 
 
-        <p:commandButton value="Eliminar" id="eliminar" update="tablaPersona" action="#{personaBean.delete}"  >
-            <f:param name="PersonaId" value="#{persona.id}" />
-        </p:commandButton>
+                <p:commandButton icon="fa fa-fw fa-remove" title="Eliminar" id="eliminar" action="#{personaBean.delete}" update="tablaPersona">
+                    <f:param name="PersonaId" value="#{persona.id}"/>
+                    <p:confirm header="Confirmación" message="¿Está seguro de eliminar este registro?"
+                               icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>
 
-            <p:commandButton action="#{personaBean.carga}" value="Mofificar" style="margin-right:20px;">
-                <f:param name="PersonaId" value="#{persona.id}" />
-            </p:commandButton>
-        </p:column>
-    </p:dataTable>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+                </p:confirmDialog>
+
+                <p:commandButton action="#{personaBean.carga}" title="Modificar" icon="fa fa-fw fa-edit"
+                                 style="margin-right:20px;">
+                    <f:param name="PersonaId" value="#{persona.id}"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
     </h:form>
     <p:linkButton outcome="personaCreate" value="Crear personas" style="margin-right:20px;"/>
 

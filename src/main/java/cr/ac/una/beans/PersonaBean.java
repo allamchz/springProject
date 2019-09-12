@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.List;
@@ -47,12 +48,14 @@ public class PersonaBean {
 
     public void create() {
         personaService.createPersona(persona);
+        addMessage("Aviso", "Registro insertado correctamente.");
         personas = personaService.getAllPersonas();
     }
 
     public void delete(){
         Long idPersona = new Long(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("PersonaId"));
         personaService.deletePersona(idPersona);
+        addMessage("Aviso", "Registro eliminado correctamente.");
         personas = personaService.getAllPersonas();
     }
     public String carga(){
@@ -61,5 +64,15 @@ public class PersonaBean {
         if (personaOptional.isPresent())
             persona = personaOptional.get();
         return "personaUpdate";
+    }
+
+    public void update(){
+        personaService.updatePersona(persona);
+        addMessage("Aviso", "Registro modificado correctamente.");
+        personas = personaService.getAllPersonas();
+    }
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

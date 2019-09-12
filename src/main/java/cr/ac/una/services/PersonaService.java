@@ -24,6 +24,10 @@ public class PersonaService {
     public void createPersona(Persona persona){
         personaRepository.save(persona);
     }
+
+    public void updatePersona(Persona persona){
+        personaRepository.save(persona);
+    }
     public void deletePersona(Long idPersona){
         personaRepository.deleteById(idPersona);
     }
